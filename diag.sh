@@ -1,6 +1,17 @@
 #!/bin/sh
 red='\e[0;31m'
 NC='\e[0m' # No Color
+echo -e "${red}Number of file descriptor per process:${NC}"
+echo -e        "Nbr of files # \tusername \tprocess/command"
+for x in `ps -eo ppid`; do 
+  if [ -e "/proc/$x/fd" ]; then
+   fd=`ls /proc/$x/fd | wc -l`
+   if [ $fd -gt 20 ]; then
+      echo -ne "$fd \t#\t"
+      ps -p $x -o user,args --no-headers
+   fi
+  fi
+done
 echo -e "${red}Shared memory, Semaphores, and Message queues:${NC} "
 ipcs -ma
 echo -e "${red}Non ''sleeping'' process:${NC} "
