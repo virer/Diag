@@ -3,7 +3,7 @@ red='\e[0;31m'
 NC='\e[0m' # No Color
 echo -e "${red}Number of file descriptor per process:${NC}"
 echo -e        "Nbr of files # \tusername \tprocess/command"
-for x in `ps -eo ppid`; do 
+for x in `ps -eo pid`; do 
   if [ -e "/proc/$x/fd" ]; then
    fd=`ls /proc/$x/fd | wc -l`
    if [ $fd -gt 20 ]; then
